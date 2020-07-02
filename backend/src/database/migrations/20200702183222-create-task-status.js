@@ -9,9 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       taskId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Tasks', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       status: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       createdAt: {

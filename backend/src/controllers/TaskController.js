@@ -11,7 +11,7 @@ module.exports = {
     });
   },
 
-  create(request, response) {
+  store(request, response) {
     response.json({
       message: "Hello CREATE TaskController",
     });

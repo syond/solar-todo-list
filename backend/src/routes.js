@@ -13,14 +13,14 @@ routes.get("/", (req, res) => {
 
 
 //UserController Routes
-routes.post('/user', UserController.create);
+routes.post('/user', UserController.store);
 routes.patch('/user/:id', UserController.update);
 
 
 //ListController Routes
 routes.get('/lists', ListController.index);
 routes.get('/lists/:id', ListController.show);
-routes.post('/lists', ListController.create);
+routes.post('/lists', ListController.store);
 routes.patch('/lists/:id', ListController.update);
 routes.delete('/lists/:id', ListController.delete);
 
@@ -28,7 +28,7 @@ routes.delete('/lists/:id', ListController.delete);
 //TaskController Routes
 routes.get('/tasks', TaskController.index);
 routes.get('/tasks/:id', TaskController.show);
-routes.post('/tasks', TaskController.create);
+routes.post('/tasks', TaskController.store);
 routes.patch('/tasks/:id', TaskController.update);
 routes.delete('/tasks/:id', TaskController.delete);
 
