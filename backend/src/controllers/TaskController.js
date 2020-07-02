@@ -1,0 +1,31 @@
+module.exports = {
+  index(request, response) {
+    response.json({
+      message: "Hello INDEX TaskController",
+    });
+  },
+
+  show(request, response) {
+    response.json({
+      message: "Hello SHOW TaskController",
+    });
+  },
+
+  create(request, response) {
+    response.json({
+      message: "Hello CREATE TaskController",
+    });
+  },
+
+  update(request, response) {
+    response.json({
+      message: "Hello UPDATE TaskController",
+    });
+  },
+
+  delete(request, response) {
+    response.json({
+      message: "Hello DELETE TaskController",
+    });
+  },
+};
