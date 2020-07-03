@@ -1,8 +1,12 @@
+const User = require('../models/User');
+
 module.exports = {
-  store(request, response) {
-    response.json({
-        message: "Hello create UserController",
-      });
+  async store(request, response) {
+    const { name, email, password } = request.body;
+
+    const user = await User.create({ name, email, password });
+
+    response.json(user);
   },
 
   update(request, response) {
