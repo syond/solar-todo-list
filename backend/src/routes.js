@@ -1,9 +1,16 @@
 const routes = require("express").Router();
 
-const UserController = require('./controllers/UserController');
-const ListController = require('./controllers/ListController');
-const TaskController = require('./controllers/TaskController');
+const authenticate = require('./middlewares/authenticate');
 
+const SessionController = require('./controllers/SessionController');
+const UserController    = require('./controllers/UserController');
+const ListController    = require('./controllers/ListController');
+const TaskController    = require('./controllers/TaskController');
+
+const Session = new SessionController;
+const User    = new UserController;
+const List    = new ListController;
+const Task    = new TaskController;
 
 routes.get("/", (req, res) => {
   res.json({
@@ -12,25 +19,29 @@ routes.get("/", (req, res) => {
 });
 
 
+//SessionController Routes
+routes.post('/login', Session.index);
+
+
 //UserController Routes
-routes.post('/user', UserController.store);
-routes.patch('/user/:id', UserController.update);
+routes.post('/user', User.store);
+routes.patch('/user/:id', authenticate, User.update);
 
 
 //ListController Routes
-routes.get('/lists', ListController.index);
-routes.get('/lists/:id', ListController.show);
-routes.post('/lists', ListController.store);
-routes.patch('/lists/:id', ListController.update);
-routes.delete('/lists/:id', ListController.delete);
+routes.get('/lists', authenticate, List.index);
+routes.get('/lists/:id', authenticate, List.show);
+routes.post('/lists', authenticate, List.store);
+routes.patch('/lists/:id', authenticate, List.update);
+routes.delete('/lists/:id', authenticate, List.delete);
 
 
 //TaskController Routes
-routes.get('/tasks', TaskController.index);
-routes.get('/tasks/:id', TaskController.show);
-routes.post('/tasks', TaskController.store);
-routes.patch('/tasks/:id', TaskController.update);
-routes.delete('/tasks/:id', TaskController.delete);
+routes.get('/tasks', authenticate, Task.index);
+routes.get('/tasks/:id', authenticate, Task.show);
+routes.post('/tasks', authenticate, Task.store);
+routes.patch('/tasks/:id', authenticate, Task.update);
+routes.delete('/tasks/:id', authenticate, Task.delete);
 
 
 module.exports = routes;
