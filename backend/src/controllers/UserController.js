@@ -1,6 +1,6 @@
 const User = require("../models/User");
 
-module.exports = {
+module.exports = class UserController {
   async store(request, response) {
     const { name, email, password } = request.body;
 
@@ -10,15 +10,18 @@ module.exports = {
 
       const user = await User.create({ name, email, password });
 
+      //to not show password when return response
+      user.password = undefined;
+
       response.json(user);
     } catch (error) {
       return response.status(400).send({ error: "Registration failed." });
     }
-  },
+  }
 
   update(request, response) {
     response.json({
       message: "Hello update UserController",
     });
-  },
-};
+  }
+}
