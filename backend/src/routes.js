@@ -20,12 +20,12 @@ routes.get("/", (req, res) => {
 
 
 //SessionController Routes
-routes.post('/login', Session.index);
+routes.post('/login', Session.login);
 
 
 //UserController Routes
-routes.post('/user', User.store);
-routes.patch('/user/:id', authenticate, User.update);
+routes.post('/users', User.store);
+routes.patch('/users/:id', authenticate, User.update);
 
 
 //ListController Routes
