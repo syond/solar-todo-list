@@ -1,16 +1,16 @@
-const fs = require('fs');
+require("dotenv").config({
+  path: process.env.NODE_ENV == "test" ? ".env.test" : ".env",
+});
 
 module.exports = {
-  development: {
-    username: 'root',
-    password: '123456',
-    database: 'solar-todo-list',
-    host: '127.0.0.1',
-    port: 3306,
-    dialect: 'mysql',
-    define: {
-      timestamps: true,
-      underscored: true,
-    }
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT || "mysql",
+  storage: "./__tests__/database.sqlite",
+  define: {
+    timestamps: true,
+    underscored: true,
   },
 };

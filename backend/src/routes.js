@@ -1,11 +1,11 @@
 const routes = require("express").Router();
 
-const authenticate = require('./middlewares/authenticate');
+const authenticate = require('./app/middlewares/authenticate');
 
-const SessionController = require('./controllers/SessionController');
-const UserController    = require('./controllers/UserController');
-const ListController    = require('./controllers/ListController');
-const TaskController    = require('./controllers/TaskController');
+const SessionController = require('./app/controllers/SessionController');
+const UserController    = require('./app/controllers/UserController');
+const ListController    = require('./app/controllers/ListController');
+const TaskController    = require('./app/controllers/TaskController');
 
 const Session = new SessionController;
 const User    = new UserController;

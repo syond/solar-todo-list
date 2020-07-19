@@ -1,13 +1,13 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model, Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
 
 class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: DataTypes.STRING,
-        email: DataTypes.STRING,
-        password: DataTypes.STRING,
+        name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        password: Sequelize.STRING,
       },
       {
         sequelize,
@@ -19,6 +19,8 @@ class User extends Model {
       const hashedPassword = await bcrypt.hash(user.password, 10);
       user.password = hashedPassword;
     });
+
+    return this;
   }
 }
 
