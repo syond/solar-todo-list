@@ -2,21 +2,14 @@ const User = require("../models/User");
 
 module.exports = class UserController {
   async store(request, response) {
-    const { name, email, password } = request.body;
+    const { email } = request.body;
 
-    try {
-      if (await User.findOne({ where: { email } }))
-        return response.status(400).send({ error: "User already registred." });
+    if (await User.findOne({ where: { email } }))
+      return response.status(400).send({ error: "User already registred." });
 
-      const user = await User.create({ name, email, password });
+    const user = await User.create(request.body);
 
-      //to not show password when return response
-      user.password = undefined;
-
-      response.status(200).json(user);
-    } catch (error) {
-      return response.status(400).send({ error: "Registration failed." });
-    }
+    response.status(200).json(user);
   }
 
   update(request, response) {

@@ -9,11 +9,23 @@ describe("User Controller", () => {
     await User.sync({ force: true });
   });
 
+  it("should encrypt the user password when new user is created", async () => {
+    const user = await User.create({
+      name: "Teste Testando",
+      email: "teste@solar.com",
+      password_testHash: "123456",
+    });
+
+    const compareHash = await bcrypt.compare("123456", user.password);
+
+    expect(compareHash).toBe(true);
+  });
+
   it("should be able to create a new user", async () => {
     const response = await request(app).post("/users").send({
       name: "Teste Testando",
       email: "teste@solar.com",
-      password: "123456",
+      password_testHash: "123456",
     });
 
     expect(response.body).toHaveProperty("id");
@@ -23,13 +35,13 @@ describe("User Controller", () => {
     await request(app).post("/users").send({
       name: "Teste Testando",
       email: "teste@solar.com",
-      password: "123456",
+      password_testHash: "123456",
     });
 
     const response = await request(app).post("/users").send({
       name: "Teste Testando",
       email: "teste@solar.com",
-      password: "123456",
+      password_testHash: "123456",
     });
 
     expect(response.status).toBe(400);
