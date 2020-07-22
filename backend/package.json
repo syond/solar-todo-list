@@ -34,6 +34,8 @@
   "devDependencies": {
     "@types/jest": "^26.0.5",
     "cross-env": "^7.0.2",
+    "factory-girl": "^5.0.4",
+    "faker": "^4.1.0",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.1.0",

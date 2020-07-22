@@ -2,6 +2,7 @@ const request = require("supertest");
 const app = require("../../src/app");
 const bcrypt = require("bcrypt");
 
+const factory = require('../factories');
 const User = require("../../src/app/models/User");
 
 describe("User Controller", () => {
@@ -10,9 +11,7 @@ describe("User Controller", () => {
   });
 
   it("should encrypt the user password when new user is created", async () => {
-    const user = await User.create({
-      name: "Teste Testando",
-      email: "teste@solar.com",
+    const user = await factory.create('User', {
       password_testHash: "123456",
     });
 
@@ -22,27 +21,21 @@ describe("User Controller", () => {
   });
 
   it("should be able to create a new user", async () => {
-    const response = await request(app).post("/users").send({
-      name: "Teste Testando",
-      email: "teste@solar.com",
-      password_testHash: "123456",
-    });
+
+    //Using "attrs" function to not create a instance of User inside the database
+    const user = await factory.attrs('User');
+
+    const response = await request(app).post("/users").send(user);
 
     expect(response.body).toHaveProperty("id");
   });
 
   it("should not be able to register with duplicated email", async () => {
-    await request(app).post("/users").send({
-      name: "Teste Testando",
-      email: "teste@solar.com",
-      password_testHash: "123456",
-    });
+    const user = await factory.attrs('User');
+    
+    await request(app).post("/users").send(user);
 
-    const response = await request(app).post("/users").send({
-      name: "Teste Testando",
-      email: "teste@solar.com",
-      password_testHash: "123456",
-    });
+    const response = await request(app).post("/users").send(user);
 
     expect(response.status).toBe(400);
   });
