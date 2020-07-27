@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { password } = require("../../config/database");
 
 module.exports = class UserController {
   async store(request, response) {
@@ -12,9 +13,18 @@ module.exports = class UserController {
     response.status(200).json(user);
   }
 
-  update(request, response) {
-    response.json({
-      message: "Hello update UserController",
-    });
+  async update(request, response) {
+    const { name, password } = request.body;
+
+    const user = await User.findByPk(request.params.id);
+
+    if (!user) return response.status(400).send({ error: "User not found." });
+
+    user.name = name;
+    user.password = password;
+
+    await user.save();
+
+    response.json(user);
   }
 };

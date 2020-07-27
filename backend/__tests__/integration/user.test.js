@@ -2,7 +2,7 @@ const request = require("supertest");
 const app = require("../../src/app");
 const bcrypt = require("bcrypt");
 
-const factory = require('../factories');
+const factory = require("../factories");
 const User = require("../../src/app/models/User");
 
 describe("User Controller", () => {
@@ -10,33 +10,54 @@ describe("User Controller", () => {
     await User.sync({ force: true });
   });
 
-  it("should encrypt the user password when new user is created", async () => {
-    const user = await factory.create('User', {
-      password_testHash: "123456",
+  describe("store", () => {
+    it("should encrypt the user password when new user is created", async () => {
+      const user = await factory.create("User", {
+        password_testHash: "123456",
+      });
+
+      const compareHash = await bcrypt.compare("123456", user.password);
+
+      expect(compareHash).toBe(true);
     });
 
-    const compareHash = await bcrypt.compare("123456", user.password);
+    it("should be able to create a new user", async () => {
+      //Using "attrs" function to not create a instance of User inside the database
+      const user = await factory.attrs("User");
 
-    expect(compareHash).toBe(true);
+      const response = await request(app).post("/users").send(user);
+
+      expect(response.body).toHaveProperty("id");
+    });
+
+    it("should not be able to create new user with same email", async () => {
+      const user = await factory.attrs("User");
+
+      await request(app).post("/users").send(user);
+
+      const response = await request(app).post("/users").send(user);
+
+      expect(response.status).toBe(400);
+    });
   });
 
-  it("should be able to create a new user", async () => {
+  describe("update", () => {
+    it("should be able to update existing user", async () => {
+      const user = await factory.attrs("User");
 
-    //Using "attrs" function to not create a instance of User inside the database
-    const user = await factory.attrs('User');
+      const responseCreate = await request(app).post("/users").send(user);
 
-    const response = await request(app).post("/users").send(user);
+      const updatedUser = {
+        ...responseCreate.body,
+        name: "Pelé dos Santos",
+        password: "456574",
+      };
 
-    expect(response.body).toHaveProperty("id");
-  });
+      const responseUpdate = await request(app)
+        .patch(`/users/${updatedUser.id}`)
+        .send(updatedUser);
 
-  it("should not be able to register with duplicated email", async () => {
-    const user = await factory.attrs('User');
-    
-    await request(app).post("/users").send(user);
-
-    const response = await request(app).post("/users").send(user);
-
-    expect(response.status).toBe(400);
+      expect(responseUpdate.body.name).toBe("Pelé dos Santos");
+    });
   });
 });

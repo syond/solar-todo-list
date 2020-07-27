@@ -25,7 +25,7 @@ routes.post('/login', Session.login);
 
 //UserController Routes
 routes.post('/users', User.store);
-routes.patch('/users/:id', authenticate, User.update);
+routes.patch('/users/:id', User.update);
 
 
 //ListController Routes

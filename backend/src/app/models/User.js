@@ -16,14 +16,17 @@ class User extends Model {
       }
     );
 
-    this.beforeCreate(async (user) => {
+    async function hashUserPassword(user) {
       if (user.password_testHash) {
         user.password = await bcrypt.hash(user.password_testHash, 10);
       } else {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         user.password = hashedPassword;
       }
-    });
+    }
+
+    this.beforeCreate(hashUserPassword);
+    this.beforeUpdate(hashUserPassword);
 
     return this;
   }
