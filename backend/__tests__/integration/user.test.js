@@ -30,6 +30,15 @@ describe("User Controller", () => {
       expect(response.body).toHaveProperty("id");
     });
 
+    it("should return status 200 when new user is created", async () => {
+      //Using "attrs" function to not create a instance of User inside the database
+      const user = await factory.attrs("User");
+
+      const response = await request(app).post("/users").send(user);
+
+      expect(response.status).toBe(200);
+    });
+
     it("should not be able to create new user with same email", async () => {
       const user = await factory.attrs("User");
 
