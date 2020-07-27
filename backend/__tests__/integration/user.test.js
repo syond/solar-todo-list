@@ -77,5 +77,11 @@ describe("User Controller", () => {
 
       expect(responseUpdate.status).toBe(200);
     });
+
+    it("should return status 400 when the user not exist", async () => {
+      const response = await request(app).patch("/users/5");
+
+      expect(response.status).toBe(400);
+    });
   });
 });
