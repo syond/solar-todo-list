@@ -25,6 +25,6 @@ module.exports = class UserController {
 
     await user.save();
 
-    response.json(user);
+    response.status(200).json(user);
   }
 };

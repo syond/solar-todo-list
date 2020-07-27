@@ -59,5 +59,23 @@ describe("User Controller", () => {
 
       expect(responseUpdate.body.name).toBe("Pelé dos Santos");
     });
+
+    it("should return status 200 when the user is updated", async () => {
+      const user = await factory.attrs("User");
+
+      const responseCreate = await request(app).post("/users").send(user);
+
+      const updatedUser = {
+        ...responseCreate.body,
+        name: "Pelé dos Santos",
+        password: "456574",
+      };
+
+      const responseUpdate = await request(app)
+        .patch(`/users/${updatedUser.id}`)
+        .send(updatedUser);
+
+      expect(responseUpdate.status).toBe(200);
+    });
   });
 });
