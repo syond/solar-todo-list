@@ -25,22 +25,22 @@ routes.post('/login', Session.login);
 
 //UserController Routes
 routes.post('/users', User.store);
-routes.patch('/users/:id', User.update);
+routes.put('/users/:id', User.update);
 
 
 //ListController Routes
-routes.get('/lists', authenticate, List.index);
-routes.get('/lists/:id', authenticate, List.show);
-routes.post('/lists', authenticate, List.store);
-routes.patch('/lists/:id', authenticate, List.update);
-routes.delete('/lists/:id', authenticate, List.delete);
+routes.get('/lists', List.index);
+routes.get('/lists/:id', List.show);
+routes.post('/lists', List.store);
+routes.put('/lists/:id', List.update);
+routes.delete('/lists/:id', List.delete);
 
 
 //TaskController Routes
 routes.get('/tasks', authenticate, Task.index);
 routes.get('/tasks/:id', authenticate, Task.show);
 routes.post('/tasks', authenticate, Task.store);
-routes.patch('/tasks/:id', authenticate, Task.update);
+routes.put('/tasks/:id', authenticate, Task.update);
 routes.delete('/tasks/:id', authenticate, Task.delete);
 
 

@@ -63,7 +63,7 @@ describe("User Controller", () => {
       };
 
       const responseUpdate = await request(app)
-        .patch(`/users/${updatedUser.id}`)
+        .put(`/users/${updatedUser.id}`)
         .send(updatedUser);
 
       expect(responseUpdate.body.name).toBe("Pelé dos Santos");
@@ -81,14 +81,14 @@ describe("User Controller", () => {
       };
 
       const responseUpdate = await request(app)
-        .patch(`/users/${updatedUser.id}`)
+        .put(`/users/${updatedUser.id}`)
         .send(updatedUser);
 
       expect(responseUpdate.status).toBe(200);
     });
 
     it("should return status 400 when the user not exist", async () => {
-      const response = await request(app).patch("/users/5");
+      const response = await request(app).put("/users/5");
 
       expect(response.status).toBe(400);
     });
