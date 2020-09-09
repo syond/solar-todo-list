@@ -1,11 +1,11 @@
-const { Model, DataTypes } = require("sequelize");
+const { Model, Sequelize } = require("sequelize");
 
 class List extends Model {
   static init(sequelize) {
     super.init(
       {
-        title: DataTypes.STRING,
-        userId: DataTypes.INTEGER,
+        title: Sequelize.STRING,
+        user_id: Sequelize.INTEGER,
       },
       {
         sequelize,

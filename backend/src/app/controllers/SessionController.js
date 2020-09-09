@@ -18,11 +18,11 @@ module.exports = class SessionController {
       return response.status(401).send({ error: "Invalid password" });
 
     try {
-      const accessToken = generateAccessToken(user.id);
+      const accessToken = generateAccessToken({ user_id: user.id });
 
       return response
         .status(200)
-        .send({ success: true, userId: user.id, accessToken: accessToken });
+        .send({ success: true, user_id: user.id, accessToken: accessToken });
     } catch (error) {
       response.status(500).send({ error: "Something went wrong" });
     }
