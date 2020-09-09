@@ -24,7 +24,7 @@ routes.post('/login', Session.login);
 
 
 //UserController Routes
-routes.post('/users', User.store);
+routes.post('/register', User.store);
 routes.put('/users/:id', User.update);
 
 
@@ -37,11 +37,11 @@ routes.delete('/lists/:id', authenticate, List.delete);
 
 
 //TaskController Routes
-routes.get('/tasks', authenticate, Task.index);
-routes.get('/tasks/:id', authenticate, Task.show);
-routes.post('/tasks', authenticate, Task.store);
-routes.put('/tasks/:id', authenticate, Task.update);
-routes.delete('/tasks/:id', authenticate, Task.delete);
+routes.get('/lists/:list_id/tasks', authenticate, Task.index);
+routes.get('/lists/:list_id/tasks/:id', authenticate, Task.show);
+routes.post('/lists/:list_id/tasks', authenticate, Task.store);
+routes.put('/lists/:list_id/tasks/:id', authenticate, Task.update);
+routes.delete('/lists/:list_id/tasks/:id', authenticate, Task.delete);
 
 
 module.exports = routes;
