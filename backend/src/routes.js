@@ -29,11 +29,11 @@ routes.put('/users/:id', User.update);
 
 
 //ListController Routes
-routes.get('/lists', List.index);
-routes.get('/lists/:id', List.show);
-routes.post('/lists', List.store);
-routes.put('/lists/:id', List.update);
-routes.delete('/lists/:id', List.delete);
+routes.get('/lists', authenticate, List.index);
+routes.get('/lists/:id', authenticate, List.show);
+routes.post('/lists', authenticate, List.store);
+routes.put('/lists/:id', authenticate, List.update);
+routes.delete('/lists/:id', authenticate, List.delete);
 
 
 //TaskController Routes

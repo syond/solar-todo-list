@@ -1,6 +1,5 @@
-const jwt = require("jsonwebtoken");
-const authConfig = require("../../config/auth.json");
 const bcrypt = require("bcrypt");
+const generateAccessToken = require("../../utils/generateAccessToken");
 
 const User = require("../models/User");
 
@@ -19,10 +18,11 @@ module.exports = class SessionController {
       return response.status(401).send({ error: "Invalid password" });
 
     try {
-      const accessToken = await jwt.sign(user.id, authConfig.secret);
+      const accessToken = generateAccessToken(user.id);
+
       return response
         .status(200)
-        .send({ sucess: "Sucess!", userId: user.id, accessToken: accessToken });
+        .send({ success: true, userId: user.id, accessToken: accessToken });
     } catch (error) {
       response.status(500).send({ error: "Something went wrong" });
     }
