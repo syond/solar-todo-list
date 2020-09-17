@@ -38,10 +38,10 @@ routes.delete('/lists/:id', authenticate, List.delete);
 
 //TaskController Routes
 routes.get('/lists/:list_id/tasks', authenticate, Task.index);
-routes.get('/lists/:list_id/tasks/:id', authenticate, Task.show);
+routes.get('/lists/:list_id/tasks/:task_id', authenticate, Task.show);
 routes.post('/lists/:list_id/tasks', authenticate, Task.store);
-routes.put('/lists/:list_id/tasks/:id', authenticate, Task.update);
-routes.delete('/lists/:list_id/tasks/:id', authenticate, Task.delete);
+routes.put('/lists/:list_id/tasks/:task_id', authenticate, Task.update);
+routes.delete('/lists/:list_id/tasks/:task_id', authenticate, Task.delete);
 
 
 module.exports = routes;

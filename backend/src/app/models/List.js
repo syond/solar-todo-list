@@ -13,6 +13,10 @@ class List extends Model {
       }
     );
   }
+
+  static associate(models) {
+    this.hasMany(models.Task, { foreignKey: "list_id", as: "tasks" });
+  }
 }
 
 module.exports = List;

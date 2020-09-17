@@ -11,6 +11,7 @@ User.init(connection);
 List.init(connection);
 Task.init(connection);
 
+List.associate(connection.models);
 Task.associate(connection.models);
 
 module.exports = connection;
